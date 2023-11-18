@@ -5,10 +5,7 @@
 SnakeGame::SnakeGame() : score(nullptr) {}
 
 SnakeGame::~SnakeGame() {
-    if (score) {
-        delete score;
-        score = nullptr;
-    }
+    Cleanup();
 }
 
 SnakeGame& SnakeGame::Instance() {
@@ -49,10 +46,10 @@ void SnakeGame::Update() {
 
 void SnakeGame::Render(HDC hdc) {
     if (gameRunning) {
-        DrawBoard(hdc);
-        DrawSnake(hdc);
-        DrawFood(hdc);
-        DrawScore(hdc);
+        Renderer::DrawBoard(hdc, BOARD_WIDTH, BOARD_HEIGHT);
+        Renderer::DrawSnake(hdc, snake);
+        Renderer::DrawFood(hdc, food);
+        Renderer::DrawScore(hdc, score->GetScore());
     }
 }
 
@@ -79,39 +76,6 @@ bool SnakeGame::IsGameRunning() const {
 
 bool SnakeGame::IsWaitingForMessageBox() const {
     return waitingForMessageBox;
-}
-
-void SnakeGame::DrawScore(HDC hdc) {
-    // Draw the score
-    wchar_t scoreText[50];
-    swprintf_s(scoreText, L"Score: %d", score->GetScore());
-    TextOut(hdc, 10, 10, scoreText, wcslen(scoreText));
-}
-
-void SnakeGame::DrawBoard(HDC hdc) {
-    // Draw the game board
-    Rectangle(hdc, 0, 0, BOARD_WIDTH * 20, BOARD_HEIGHT * 20);
-}
-
-void SnakeGame::DrawSnake(HDC hdc) {
-    // Draw the snake
-    for (size_t i = 0; i < snake.size(); ++i) {
-        int color = RGB(0, 255 - i * 10, 0); // Varying shades of green
-        HBRUSH hBrush = CreateSolidBrush(color);
-        HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-        Rectangle(hdc, snake[i].x * 20, snake[i].y * 20, (snake[i].x + 1) * 20, (snake[i].y + 1) * 20);
-        SelectObject(hdc, hOldBrush);
-        DeleteObject(hBrush);
-    }
-}
-
-void SnakeGame::DrawFood(HDC hdc) {
-    // Draw the food
-    HBRUSH hBrush = CreateSolidBrush(RGB(255, 0, 0)); // Red color for food
-    HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, hBrush);
-    Rectangle(hdc, food.x * 20, food.y * 20, (food.x + 1) * 20, (food.y + 1) * 20);
-    SelectObject(hdc, hOldBrush);
-    DeleteObject(hBrush);
 }
 
 void SnakeGame::MoveSnake() {
@@ -175,6 +139,8 @@ void SnakeGame::GameOver() {
         Initialize(hwnd);
     }
     else {
+        Cleanup();
+        waitingForMessageBox = false;
         PostQuitMessage(0);
     }
 }

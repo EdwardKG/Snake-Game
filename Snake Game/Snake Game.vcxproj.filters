@@ -24,12 +24,24 @@
     <ClCompile Include="SnakeGame.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Score.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="SnakeGame.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>

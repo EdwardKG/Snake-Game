@@ -2,6 +2,7 @@
 #include <vector>
 #include <windows.h>
 #include "Score.h"
+#include "Renderer.h"
 #include <chrono>
 
 
@@ -32,10 +33,6 @@ private:
     SnakeGame(); // Private constructor to enforce Singleton pattern
     ~SnakeGame(); // Destructor
 
-    void DrawScore(HDC hdc); // Draw the current score
-    void DrawBoard(HDC hdc); // Draw the game board
-    void DrawSnake(HDC hdc); // Draw the snake
-    void DrawFood(HDC hdc); // Draw the food
     void MoveSnake(); // Move the snake based on the current direction
     void GenerateFood(); // Generate food at a random position
     void CheckCollision(); // Check for collisions (self or walls)

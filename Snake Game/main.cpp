@@ -1,6 +1,6 @@
-// Main.cpp
 #include <windows.h>
 #include "SnakeGame.h"
+#include "Input.h"
 
 LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
@@ -58,20 +58,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam) 
     }
     break;
     case WM_KEYDOWN:
-        switch (wParam) {
-        case VK_UP:
-            SnakeGame::Instance().SetDirection(Direction::UP);
-            break;
-        case VK_DOWN:
-            SnakeGame::Instance().SetDirection(Direction::DOWN);
-            break;
-        case VK_LEFT:
-            SnakeGame::Instance().SetDirection(Direction::LEFT);
-            break;
-        case VK_RIGHT:
-            SnakeGame::Instance().SetDirection(Direction::RIGHT);
-            break;
-        }
+        Input::ProcessInput(hwnd, wParam, lParam);
+        break;
+    case WM_CLOSE:
+        PostQuitMessage(0);
         break;
     case WM_DESTROY:
         SnakeGame::Instance().Cleanup();
