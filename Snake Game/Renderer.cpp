@@ -7,7 +7,9 @@ void Renderer::DrawBoard(HDC hdc, int width, int height) {
 void Renderer::DrawSnake(HDC hdc, const std::vector<POINT>& snake) {
     // Draw the snake
     for (size_t i = 0; i < snake.size(); ++i) {
-        int color = RGB(0, 255 - i * 10, 0); // Varying shades of green
+        int gradient = 255 - std::abs(int(i - snake.size() / 2) * 10); // Calculate gradient
+
+        int color = RGB(0, gradient, 0); // Varying shades of green
         HBRUSH hBrush = CreateSolidBrush(color);
         HBRUSH hOldBrush = (HBRUSH)SelectObject(hdc, hBrush);
         Rectangle(hdc, snake[i].x * 20, snake[i].y * 20, (snake[i].x + 1) * 20, (snake[i].y + 1) * 20);

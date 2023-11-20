@@ -35,6 +35,7 @@ private:
 
     void MoveSnake(); // Move the snake based on the current direction
     void GenerateFood(); // Generate food at a random position
+    bool IsFoodOnSnake() const; // check is food spawned on snake
     void CheckCollision(); // Check for collisions (self or walls)
     void GameOver(); // Handle game over condition
 

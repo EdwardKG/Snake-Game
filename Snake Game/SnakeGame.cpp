@@ -111,9 +111,21 @@ void SnakeGame::MoveSnake() {
 }
 
 void SnakeGame::GenerateFood() {
-    // Generate food at a random position on the board
-    food.x = rand() % BOARD_WIDTH;
-    food.y = rand() % BOARD_HEIGHT;
+    // Keep generating random positions until a valid one is found
+    do {
+        food.x = rand() % BOARD_WIDTH;
+        food.y = rand() % BOARD_HEIGHT;
+    } while (IsFoodOnSnake());
+}
+
+bool SnakeGame::IsFoodOnSnake() const {
+    // Check if the food position is occupied by the snake
+    for (const auto& segment : snake) {
+        if (food.x == segment.x && food.y == segment.y) {
+            return true;
+        }
+    }
+    return false;
 }
 
 void SnakeGame::CheckCollision() {
@@ -139,8 +151,6 @@ void SnakeGame::GameOver() {
         Initialize(hwnd);
     }
     else {
-        Cleanup();
-        waitingForMessageBox = false;
         PostQuitMessage(0);
     }
 }

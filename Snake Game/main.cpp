@@ -17,8 +17,8 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
         0,
         L"SnakeGameWindowClass",
         L"Snake Game",
-        WS_OVERLAPPEDWINDOW,
-        CW_USEDEFAULT, CW_USEDEFAULT, 800, 600,
+        (WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU),
+        CW_USEDEFAULT, CW_USEDEFAULT, 410, 440,
         nullptr, nullptr, hInstance, nullptr);
 
     if (hwnd == nullptr) {
